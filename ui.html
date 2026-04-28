@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Font Pairings</title>
+    <style>
+      :root {
+        /* Light mode (default) */
+        --bg-color: #ffffff;
+        --text-color: #000000;
+        --border-color: #e4e4e7;
+        --search-placeholder: #6D6D6D;
+        --search-icon: #6D6D6D;
+        --tab-color: #6D6D6D;
+        --tab-selected: #000000;
+        --card-heading: #000000;
+        --card-body: #000000;
+        --card-caption: #6B6B6B;
+        --card-hover: #F1F1F1;
+        --no-results-text: #6D6D6D;
+        --no-results-heading: #333;
+        --no-results-desc: #6D6D6D;
+        --suggestions: #999;
+      }
+
+      [data-theme="dark"] {
+        /* Dark mode */
+        --bg-color: #2C2C2C;
+        --text-color: #ffffff;
+        --border-color: #383838;
+        --search-placeholder: #BEBEBE;
+        --search-icon: #ffffff;
+        --tab-color: #BEBEBE;
+        --tab-selected: #ffffff;
+        --card-heading: #ffffff;
+        --card-body: #ffffff;
+        --card-caption: #BEBEBE;
+        --card-hover: #383838;
+        --no-results-text: #ffffff;
+        --no-results-heading: #ffffff;
+        --no-results-desc: #ffffff;
+        --suggestions: #BEBEBE;
+      }
+
+      html, body { height: 100%; margin: 0; padding: 0; }
+      body { 
+        font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; 
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .container { height: 100%; display: flex; flex-direction: column; width: 100%; box-sizing: border-box; }
+      
+      .search { width: 100%; box-sizing: border-box; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); height: 40px; }
+      .search-inner { display: flex; align-items: center; padding: 0 15px; gap: 10px; height: 100%; }
+      .search .icon { width: 14px; height: 14px; display: inline-block; flex: 0 0 auto; }
+      .search .icon svg { stroke: var(--search-icon); }
+      .search input { flex: 1; min-width: 0; border: none; outline: none; font-size: 12px; background: transparent; color: var(--text-color); }
+      .search input::placeholder { color: var(--search-placeholder); }
+      .search button { background: transparent; border: none; cursor: pointer; padding: 0; width: 14px; height: 14px; }
+      
+      .divider { height: 1px; background: var(--border-color); }
+      
+      .tabs-wrap { padding: 0 5px; box-sizing: border-box; border-bottom: 1px solid var(--border-color); height: 40px; display: flex; align-items: center; justify-content: space-between; }
+      .tabs { display: flex; flex: 1; align-items: start; justify-content: space-between;}
+      .tab { flex: unset; font-size: 12px; padding: 0 10px; text-align: start; background: transparent; border: none; cursor: pointer; color: var(--tab-color); height: 100%; display: flex; align-items: center; justify-content: start; font-weight: 500; }
+      .tab[aria-selected="true"] { color: var(--tab-selected); }
+   
+      .list { flex: 1; overflow: auto; display: flex; flex-direction: column; gap: 0; }
+      .card { width: 100%; border-bottom: 1px solid var(--border-color); padding: 20px 16px; box-sizing: border-box; cursor: pointer; transition: background-color 0.2s; }
+      .card:hover { background-color: var(--card-hover); }
+      .card-content { display: flex; flex-direction: column; gap: 8px; }
+      .card-heading { font-size: 24px; font-weight: bold; line-height: 1.2; color: var(--card-heading); }
+      .card-body { font-size: 18px; line-height: 1.4; color: var(--card-body); }
+      .card-caption { font-size: 14px; color: var(--card-caption); margin-top: 16px; }
+      
+      .no-results { text-align: center; padding: 20px; color: var(--no-results-text); }
+      .no-results h3 { margin-bottom: 10px; color: var(--no-results-heading); }
+      .no-results p { margin-bottom: 20px; font-size: 14px; color: var(--no-results-desc); }
+      .suggestions { font-size: 12px; color: var(--suggestions); }
+
+      /* Custom scrollbar styling */
+      .list::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      .list::-webkit-scrollbar-track {
+        background: #F3F4F6;
+      }
+      
+      .list::-webkit-scrollbar-thumb {
+        background: #D1D5DB;
+        border-radius: 4px;
+      }
+      
+      .list::-webkit-scrollbar-thumb:hover {
+        background: #9CA3AF;
+      }
+
+      [data-theme="dark"] .list::-webkit-scrollbar-track {
+        background: #393939;
+      }
+
+      [data-theme="dark"] .list::-webkit-scrollbar-thumb {
+        background: #6B6B6B;
+      }
+      
+      [data-theme="dark"] .list::-webkit-scrollbar-thumb:hover {
+        background: #6B6B6B;
+      }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="search">
+      <div class="search-inner">
+        <span class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M15.5 15.5L20 20" stroke="#6D6D6D" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="11" cy="11" r="6" stroke="#6D6D6D" stroke-width="2" fill="none"/></svg>
+        </span>
+        <input id="search-input" placeholder="Search font pairings..." />
+        <button id="clear-search" style="display: none;">
+          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M18 6L6 18" stroke="#6D6D6D" stroke-width="2" stroke-linecap="round"/><path d="M6 6L18 18" stroke="#6D6D6D" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+    
+    <div class="tabs-wrap">
+      <div class="tabs" role="tablist">
+        <button class="tab" aria-selected="true" data-cat="Recommended">Recommended</button>
+        <button class="tab" aria-selected="false" data-cat="Editorial">Editorial</button>
+        <button class="tab" aria-selected="false" data-cat="Modern">Modern</button>
+        <button class="tab" aria-selected="false" data-cat="Classy">Classy</button>
+      </div>
+      <div class="divider"></div>
+    </div>
+    
+    <div id="list" class="list"></div>
+  </div>
+
+<script>
+(function() {
+  const list = document.getElementById('list');
+  const searchInput = document.getElementById('search-input');
+  const clearSearchBtn = document.getElementById('clear-search');
+  let allFontPairs = [];
+  let availableFonts = [];
+  let currentCategory = 'Recommended';
+  let loadedFonts = new Set();
+
+  // Load Google Fonts dynamically
+  function loadGoogleFont(fontFamily, weight = '400') {
+    if (loadedFonts.has(`${fontFamily}-${weight}`)) {
+      return Promise.resolve();
+    }
+
+    return new Promise((resolve, reject) => {
+      const link = document.createElement('link');
+      link.href = `https://fonts.googleapis.com/css2?family=${fontFamily.replace(/\s+/g, '+')}:wght@${weight}&display=swap`;
+      link.rel = 'stylesheet';
+      
+      link.onload = () => {
+        loadedFonts.add(`${fontFamily}-${weight}`);
+        resolve();
+      };
+      
+      link.onerror = () => {
+        console.log(`Failed to load Google Font: ${fontFamily}`);
+        reject(new Error(`Failed to load ${fontFamily}`));
+      };
+      
+      document.head.appendChild(link);
+    });
+  }
+
+  // Load multiple fonts for a pairing
+  async function loadFontPairing(headingFont, bodyFont) {
+    try {
+      // Try to load heading font with bold weight
+      await loadGoogleFont(headingFont, '700');
+    } catch (error) {
+      try {
+        // Fallback to regular weight
+        await loadGoogleFont(headingFont, '400');
+      } catch (error) {
+        console.log(`Could not load heading font: ${headingFont}`);
+      }
+    }
+
+    try {
+      // Load body font with regular weight
+      await loadGoogleFont(bodyFont, '400');
+    } catch (error) {
+      console.log(`Could not load body font: ${bodyFont}`);
+    }
+  }
+
+  async function createCardsFromFonts(fonts) {
+    list.innerHTML = '';
+    if (!fonts || fonts.length === 0) return;
+
+    // Load all fonts first
+    const fontPromises = fonts.map(pair => loadFontPairing(pair.heading, pair.body));
+    await Promise.allSettled(fontPromises);
+
+    fonts.forEach(pair => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const content = document.createElement('div');
+      content.className = 'card-content';
+
+      const heading = document.createElement('div');
+      heading.className = 'card-heading';
+      heading.textContent = `${pair.heading} & ${pair.body}`;
+      heading.style.fontFamily = `"${pair.heading}", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+      heading.style.fontWeight = '700';
+      heading.style.fontSize = '24px';
+      heading.style.lineHeight = '1.2';
+
+      const body = document.createElement('div');
+      body.className = 'card-body';
+      body.textContent = 'The quick brown fox jumps over the lazy dog. Pack my box with five dozen jugs.';
+      body.style.fontFamily = `"${pair.body}", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+      body.style.fontSize = '18px';
+      body.style.lineHeight = '1.4';
+
+      const caption = document.createElement('div');
+      caption.className = 'card-caption';
+      caption.textContent = `${pair.heading} & ${pair.body}`;
+
+      content.appendChild(heading);
+      content.appendChild(body);
+      card.appendChild(content);
+      card.appendChild(caption);
+
+      // Add click handler to apply the pairing
+      card.addEventListener('click', () => {
+        // Brief highlight effect
+        const currentHoverColor = getComputedStyle(document.documentElement).getPropertyValue('--card-hover');
+        card.style.backgroundColor = currentHoverColor;
+        setTimeout(() => {
+          card.style.backgroundColor = '';
+        }, 150);
+        
+        // Send message to apply the pairing with text content
+        parent.postMessage({ 
+          pluginMessage: { 
+            type: 'apply-pairing', 
+            heading: pair.heading, 
+            body: pair.body,
+            headingText: `${pair.heading} & ${pair.body}`,
+            bodyText: 'The quick brown fox jumps over the lazy dog'
+          } 
+        }, '*');
+      });
+
+      list.appendChild(card);
+    });
+  }
+
+  // Theme management
+  function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : '');
+  }
+
+  function getSystemTheme() {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function initializeTheme() {
+    // Auto-detect system theme
+    const systemTheme = getSystemTheme();
+    setTheme(systemTheme);
+  }
+
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    setTheme(e.matches ? 'dark' : 'light');
+  });
+
+  // Initialize theme
+  initializeTheme();
+
+  // Request fonts from plugin
+  parent.postMessage({ pluginMessage: { type: 'get-fonts' } }, '*');
+
+  window.addEventListener('message', async (event) => {
+    if (event.data.pluginMessage?.type === 'font-list') {
+      allFontPairs = event.data.pluginMessage.fonts;
+      availableFonts = event.data.pluginMessage.availableFonts || [];
+      allCategoriesFonts = event.data.pluginMessage.allCategoriesFonts || [];
+      console.log('Received fonts:', allFontPairs.length, 'Current category fonts');
+      console.log('All categories fonts:', allCategoriesFonts.length, 'Global fonts');
+      await createCardsFromFonts(allFontPairs);
+    }
+  });
+
+  // Global search across all categories
+  let searchTimeout;
+  let allCategoriesFonts = []; // Store all fonts from all categories for global search
+  
+  searchInput.addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase().trim();
+    clearSearchBtn.style.display = term ? 'block' : 'none';
+    clearTimeout(searchTimeout);
+
+    searchTimeout = setTimeout(async () => {
+      if (!term) {
+        // When search is cleared, go back to current category
+        parent.postMessage({ 
+          pluginMessage: { 
+            type: 'filter-category', 
+            category: currentCategory.toLowerCase() 
+          } 
+        }, '*');
+      } else {
+        // Global search across all categories
+        console.log('Searching for:', term);
+        console.log('All categories fonts available:', allCategoriesFonts.length);
+        const filtered = allCategoriesFonts.filter(pair =>
+          pair.heading.toLowerCase().includes(term) ||
+          pair.body.toLowerCase().includes(term)
+        );
+        console.log('Filtered results:', filtered.length);
+        
+        if (filtered.length > 0) {
+          await createCardsFromFonts(filtered);
+        } else {
+          list.innerHTML = `<div class="no-results">
+            <h3>No results found</h3>
+            <p>Try searching for a different font name</p>
+          </div>`;
+        }
+      }
+    }, 150);
+  });
+
+  clearSearchBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    clearSearchBtn.style.display = 'none';
+    // Request current category fonts when search is cleared
+    parent.postMessage({ 
+      pluginMessage: { 
+        type: 'filter-category', 
+        category: currentCategory.toLowerCase() 
+      } 
+    }, '*');
+  });
+
+  // Tabs
+  const tabs = Array.from(document.querySelectorAll('.tab'));
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const category = btn.getAttribute('data-cat');
+      currentCategory = category;
+      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+      btn.setAttribute('aria-selected', 'true');
+      searchInput.value = '';
+      clearSearchBtn.style.display = 'none';
+      
+      // Send message to get fonts for the selected category
+      parent.postMessage({ 
+        pluginMessage: { 
+          type: 'filter-category', 
+          category: category.toLowerCase() 
+        } 
+      }, '*');
+      
+      list.scrollTop = 0;
+    });
+  });
+})();
+</script>
+</body>
+</html>
